@@ -1,0 +1,137 @@
+---
+alwaysApply: true
+description: "TypeScript coding standards, module patterns, and error handling for UX Pilot"
+globs: ["**/*.ts", "**/*.tsx"]
+---
+
+# Coding Standards — UX Pilot
+
+## TypeScript Strict Mode
+
+- `strict: true` is non-negotiable — never loosen compiler options
+- **No `any` type** — use `unknown` with type guards, generics, or proper interfaces
+- **Explicit return types** on all exported functions, public methods, and capability `execute()` methods
+- **No non-null assertions** (`!`) — use proper null checks or optional chaining
+- **No type assertions** (`as`) unless narrowing from `unknown` after a type guard
+
+```typescript
+// ✅ Correct — explicit return, no any
+export function parseTokens(raw: unknown): DesignTokenSet {
+  if (!isValidTokenInput(raw)) {
+    throw new UXPilotError('INVALID_INPUT', 'Token input failed validation');
+  }
+  return buildTokenSet(raw);
+}
+
+// ❌ Wrong — implicit return, any type
+export function parseTokens(raw: any) {
+  return buildTokenSet(raw);
+}
+```
+
+## Module Pattern
+
+Each capability is a class implementing the `Capability` interface:
+
+```typescript
+export interface Capability<TInput, TOutput> {
+  readonly name: string;
+  readonly description: string;
+  execute(input: TInput): Promise<TOutput>;
+}
+```
+
+- One capability per directory under `src/capabilities/`
+- Entry file matches directory name: `src/capabilities/design-system/design-system.ts`
+- Supporting utilities live alongside the entry file
+- Knowledge base queries go through `src/knowledge/`
+
+## Import Ordering
+
+Group imports in this order, separated by blank lines:
+
+1. **Node built-ins** — `import { readFile } from 'node:fs/promises';`
+2. **Third-party packages** — `import Anthropic from '@anthropic-ai/sdk';`
+3. **Local modules** — `import { Registry } from '../core/registry.js';`
+4. **Type-only imports** — `import type { DesignTokenSet } from '../types.js';`
+
+```typescript
+import { resolve } from 'node:path';
+
+import Anthropic from '@anthropic-ai/sdk';
+import chalk from 'chalk';
+
+import { Registry } from '../core/registry.js';
+import { formatOutput } from '../cli/formatter.js';
+
+import type { CapabilityInput } from '../core/types.js';
+```
+
+## File Naming
+
+- **kebab-case** for all files: `design-system.ts`, `user-flows.ts`, `wcag-rules.ts`
+- **No index.ts barrel files** — import directly from the module file
+- Test files: `<module>.test.ts` alongside the module
+
+## Error Handling
+
+Use the custom `UXPilotError` class for all domain errors:
+
+```typescript
+export class UXPilotError extends Error {
+  constructor(
+    public readonly code: UXPilotErrorCode,
+    message: string,
+    public readonly context?: Record<string, unknown>,
+  ) {
+    super(message);
+    this.name = 'UXPilotError';
+  }
+}
+
+type UXPilotErrorCode =
+  | 'INVALID_INPUT'
+  | 'CAPABILITY_NOT_FOUND'
+  | 'KNOWLEDGE_BASE_ERROR'
+  | 'LLM_ERROR'
+  | 'CONTRAST_RATIO_FAIL'
+  | 'SCHEMA_VALIDATION_ERROR';
+```
+
+Rules:
+- Never throw raw strings or generic `Error`
+- Always include an error code for programmatic handling
+- Include `context` object with relevant data for debugging
+- Catch at capability boundaries, not deep in utility functions
+
+## ESM Module System
+
+- Package uses `"type": "module"` — all code is ESM
+- Use `.js` extensions in relative imports (TypeScript compiles `.ts` → `.js`)
+- Use `node:` protocol for built-in imports: `import { readFile } from 'node:fs/promises'`
+- No `require()`, no `__dirname` — use `import.meta.url` and `import.meta.dirname`
+- Named exports only — no default exports
+
+```typescript
+// ✅ Correct
+import { DesignSystem } from './design-system.js';
+import { readFile } from 'node:fs/promises';
+export { DesignSystem };
+
+// ❌ Wrong
+const { readFile } = require('fs');
+export default DesignSystem;
+```
+
+## Output Formatting
+
+- CLI output uses `chalk` for color and `ora` for spinners
+- MCP responses return structured JSON matching the tool's output schema
+- All capability outputs implement a `toMarkdown(): string` method for human-readable format
+- All capability outputs implement a `toJSON(): object` method for programmatic format
+
+---
+
+Author: Charley Scholz, JLAI
+Co-authored: Claude Opus 4.5, Claude Code (coding assistant), Cursor (IDE)
+Last Updated: 2026-02-23

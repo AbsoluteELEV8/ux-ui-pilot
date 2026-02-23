@@ -1,0 +1,40 @@
+{
+  "name": "ux-pilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Specialized UX/UI design agent — design systems, accessibility audits, user flows, wireframes, and design critique",
+  "author": "Charley Scholz, JLAI",
+  "contributors": [
+    "Claude Opus 4.5 (AI)",
+    "Claude Code (coding assistant)",
+    "Cursor (IDE)"
+  ],
+  "type": "module",
+  "main": "dist/core/ux-pilot.js",
+  "bin": {
+    "ux-pilot": "dist/cli/ux-pilot.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/core/ux-pilot.js",
+    "mcp": "node dist/mcp/server.js",
+    "cli": "node dist/cli/ux-pilot.js",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "commander": "^12.1.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0"
+  }
+}

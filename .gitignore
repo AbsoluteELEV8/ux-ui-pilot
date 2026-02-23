@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+# Keep .env.example for documentation
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs and temp
+logs/
+*.log
+npm-debug.log*
+tmp/
+temp/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Do NOT ignore .cursor/ or .claude/ — part of the 4 .md pattern

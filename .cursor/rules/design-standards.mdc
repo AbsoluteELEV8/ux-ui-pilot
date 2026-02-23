@@ -1,0 +1,309 @@
+---
+alwaysApply: true
+description: "UX/UI design domain standards — WCAG, heuristics, tokens, component specs, and user flows"
+---
+
+# Design Standards — UX Pilot
+
+These standards define how UX Pilot evaluates, generates, and communicates design guidance.
+
+---
+
+## 1. Accessibility: WCAG 2.2 AA Minimum
+
+All design output MUST meet **WCAG 2.2 Level AA** as the baseline. Level AAA recommendations may be included as stretch goals but are never required.
+
+### Key Criteria (always check)
+
+| Criterion | ID | Requirement |
+|---|---|---|
+| Color Contrast (normal text) | 1.4.3 | ≥ 4.5:1 ratio |
+| Color Contrast (large text) | 1.4.3 | ≥ 3:1 ratio |
+| Color Contrast (UI components) | 1.4.11 | ≥ 3:1 ratio |
+| Focus Visible | 2.4.7 | Focus indicator always visible |
+| Target Size | 2.5.8 | ≥ 24×24 CSS px (AA) |
+| Keyboard Accessible | 2.1.1 | All functionality via keyboard |
+| Name, Role, Value | 4.1.2 | Correct ARIA semantics |
+| Reflow | 1.4.10 | No horizontal scroll at 320px width |
+
+### Contrast Validation
+
+Every color pairing in a generated design system MUST include computed contrast ratios. Flag violations inline:
+
+```markdown
+⚠️ CONTRAST FAIL: `#767676` on `#ffffff` = 4.48:1 (needs 4.5:1 for normal text)
+✅ PASS: `#595959` on `#ffffff` = 7.0:1
+```
+
+---
+
+## 2. Evaluation Framework: Nielsen's 10 Usability Heuristics
+
+When evaluating designs, map every finding to one of these heuristics:
+
+| # | Heuristic | Key Question |
+|---|---|---|
+| H1 | Visibility of System Status | Does the user know what's happening? |
+| H2 | Match Between System and Real World | Does it use the user's language? |
+| H3 | User Control and Freedom | Can the user undo/escape? |
+| H4 | Consistency and Standards | Does it follow platform conventions? |
+| H5 | Error Prevention | Does it prevent errors before they happen? |
+| H6 | Recognition Rather Than Recall | Is information visible, not memorized? |
+| H7 | Flexibility and Efficiency of Use | Are there shortcuts for experts? |
+| H8 | Aesthetic and Minimalist Design | Is every element necessary? |
+| H9 | Help Users Recognize and Recover from Errors | Are error messages helpful? |
+| H10 | Help and Documentation | Is help available when needed? |
+
+### Severity Scale
+
+| Level | Label | Impact |
+|---|---|---|
+| 0 | Not a problem | No usability issue |
+| 1 | Cosmetic | Fix if time allows |
+| 2 | Minor | Low priority fix |
+| 3 | Major | High priority — causes task failure for some users |
+| 4 | Catastrophic | Must fix — prevents task completion |
+
+---
+
+## 3. Design Token Structure
+
+Generated design systems MUST use this canonical token structure:
+
+### Color Tokens
+
+```json
+{
+  "color": {
+    "primary": { "50": "#eff6ff", "100": "#dbeafe", "..": "...", "900": "#1e3a5f" },
+    "secondary": { "50": "...", "900": "..." },
+    "neutral": { "0": "#ffffff", "50": "...", "950": "#0a0a0a" },
+    "semantic": {
+      "success": "#16a34a",
+      "warning": "#ca8a04",
+      "error": "#dc2626",
+      "info": "#2563eb"
+    },
+    "surface": {
+      "background": "{color.neutral.0}",
+      "foreground": "{color.neutral.950}",
+      "muted": "{color.neutral.100}",
+      "muted-foreground": "{color.neutral.500}"
+    }
+  }
+}
+```
+
+- Generate 10-stop palettes (50–900) for brand colors
+- Include semantic colors (success, warning, error, info)
+- Include surface tokens referencing palette values
+- Validate every foreground/background pair for contrast
+
+### Typography Tokens
+
+```json
+{
+  "typography": {
+    "fontFamily": {
+      "sans": "Inter, system-ui, -apple-system, sans-serif",
+      "mono": "JetBrains Mono, Fira Code, monospace"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem"
+    },
+    "fontWeight": {
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "lineHeight": {
+      "tight": 1.25,
+      "normal": 1.5,
+      "relaxed": 1.75
+    }
+  }
+}
+```
+
+### Spacing Tokens
+
+```json
+{
+  "spacing": {
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "12": "3rem",
+    "16": "4rem",
+    "24": "6rem"
+  }
+}
+```
+
+### Breakpoint Tokens
+
+```json
+{
+  "breakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  }
+}
+```
+
+### Shadow and Border Tokens
+
+```json
+{
+  "shadow": {
+    "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "md": "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+    "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+    "xl": "0 20px 25px -5px rgb(0 0 0 / 0.1)"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.25rem",
+    "md": "0.375rem",
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "full": "9999px"
+  }
+}
+```
+
+---
+
+## 4. Component Specification Format
+
+Every component spec MUST include:
+
+```markdown
+## Component: <Name>
+
+### Purpose
+One-sentence description of what this component does.
+
+### Anatomy
+- List of visual parts (e.g., label, input field, helper text, error message)
+
+### Props / API
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| ... | ... | ... | ... |
+
+### States
+- Default, Hover, Focus, Active, Disabled, Error, Loading
+
+### Variants
+- Size: sm, md, lg
+- Style: outlined, filled, ghost
+
+### Accessibility
+- **Role**: `role="..."` or semantic element
+- **Keyboard**: Tab order, Enter/Space behavior, Escape behavior
+- **ARIA**: Required aria-* attributes
+- **Announcements**: Screen reader behavior on state changes
+
+### Responsive Behavior
+- How the component adapts across breakpoints
+
+### Design Tokens Used
+- List of tokens this component references
+```
+
+---
+
+## 5. User Flow Diagram Standards
+
+All user flows MUST be expressed in **Mermaid** syntax for portability.
+
+### Required Elements
+
+- **Entry point**: How the user arrives
+- **Happy path**: Primary success flow (highlighted)
+- **Decision points**: Diamond nodes with clear yes/no labels
+- **Error states**: Red-styled nodes with recovery paths
+- **Edge cases**: Annotated with notes
+- **Exit points**: Where the user leaves the flow
+
+### Mermaid Style Guide
+
+```mermaid
+flowchart TD
+    START([User arrives]) --> A[Step 1]
+    A --> B{Decision?}
+    B -->|Yes| C[Happy path continues]
+    B -->|No| D[Alternative path]
+    C --> E([Success exit])
+    D --> F[Error state]:::error
+    F --> G[Recovery action]
+    G --> A
+
+    classDef error fill:#fee2e2,stroke:#dc2626,color:#991b1b
+```
+
+- Use `([...])` for entry/exit points (stadium shape)
+- Use `{...}` for decisions (diamond)
+- Use `[...]` for actions (rectangle)
+- Apply `:::error` class to error states
+- Label every edge — no unlabeled arrows
+
+---
+
+## 6. Accessibility Audit Report Format
+
+```markdown
+# Accessibility Audit: <Component/Page Name>
+
+**Standard**: WCAG 2.2 Level AA
+**Date**: YYYY-MM-DD
+**Scope**: <what was evaluated>
+
+## Summary
+- **Critical**: X issues
+- **Major**: X issues
+- **Minor**: X issues
+
+## Findings
+
+### [CRITICAL] <Issue Title>
+- **WCAG Criterion**: X.X.X <Name>
+- **Element**: `<selector or description>`
+- **Issue**: What is wrong
+- **Impact**: Who is affected and how
+- **Fix**: Specific code/design change required
+
+### [MAJOR] <Issue Title>
+...
+
+### [MINOR] <Issue Title>
+...
+
+## Passed Checks
+- ✅ <Criterion>: <What was verified>
+
+## Recommendations
+Prioritized list of improvements beyond minimum compliance.
+```
+
+---
+
+Author: Charley Scholz, JLAI
+Co-authored: Claude Opus 4.5, Claude Code (coding assistant), Cursor (IDE)
+Last Updated: 2026-02-23
