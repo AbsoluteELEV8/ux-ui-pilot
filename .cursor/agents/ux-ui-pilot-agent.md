@@ -1,5 +1,5 @@
 ---
-name: ux-pilot-orchestrator
+name: ux-ui-pilot-orchestrator
 description: UX/UI design agent that analyzes design requests, routes to specialized capabilities, and synthesizes actionable outputs. Use when the user needs design system generation, accessibility auditing, user flow mapping, component architecture, design critique, or wireframing guidance.
 model: claude-opus-4-5-20250514
 ---

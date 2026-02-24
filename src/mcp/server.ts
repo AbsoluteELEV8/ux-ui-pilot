@@ -13,7 +13,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { UXPilot } from '../core/ux-pilot.js';
+import { UXPilot } from '../core/ux-ui-pilot.js';
 
 type CapabilityId =
   | 'design-system'
@@ -291,7 +291,7 @@ function transformInput(
 
 function createServer(): Server {
   const server = new Server(
-    { name: 'ux-pilot', version: '0.1.0' },
+    { name: 'ux-ui-pilot', version: '0.1.0' },
     { capabilities: { tools: {} } },
   );
 

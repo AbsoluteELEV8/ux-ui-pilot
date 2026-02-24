@@ -1,5 +1,5 @@
 /**
- * @file ux-pilot.ts
+ * @file ux-ui-pilot.ts
  * @description Main orchestrator — routes requests to capabilities via lazy-loading
  * @author Charley Scholz, ELEV8
  * @coauthor Claude 4.6 Opus, Claude Code (coding assistant), Cursor (IDE)

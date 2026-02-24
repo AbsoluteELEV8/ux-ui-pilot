@@ -18,7 +18,7 @@
 ### Invocation Modes
 
 - **MCP Server** — callable from Cursor, Claude Code, or any MCP-compatible client
-- **CLI** — `ux-pilot <command>` for terminal-based usage
+- **CLI** — `ux-ui-pilot <command>` for terminal-based usage
 
 ---
 
@@ -137,14 +137,14 @@ Request Flow:
 ### Directory Structure
 
 ```
-ux-pilot/
+ux-ui-pilot/
 ├── CLAUDE.md                    ← you are here
 ├── package.json
 ├── tsconfig.json
 ├── .env.example
 ├── src/
 │   ├── core/                    ← orchestration, registry, shared types
-│   │   └── ux-pilot.ts
+│   │   └── ux-ui-pilot.ts
 │   ├── capabilities/            ← standalone capability modules
 │   │   ├── design-system/
 │   │   ├── accessibility/
@@ -157,7 +157,7 @@ ux-pilot/
 │   │   ├── server.ts
 │   │   └── tools/
 │   └── cli/                     ← commander-based CLI
-│       ├── ux-pilot.ts
+│       ├── ux-ui-pilot.ts
 │       └── commands/
 ├── tasks/
 │   ├── todo.md

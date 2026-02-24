@@ -47,9 +47,9 @@ Add to `.cursor/mcp.json` or Cursor Settings → MCP:
 ```json
 {
   "mcpServers": {
-    "ux-pilot": {
+    "ux-ui-pilot": {
       "command": "node",
-      "args": ["C:/path/to/ux-pilot/dist/mcp/server.js"],
+      "args": ["C:/path/to/ux-ui-pilot/dist/mcp/server.js"],
       "env": {
         "ANTHROPIC_API_KEY": "<your-api-key>"
       }
@@ -65,9 +65,9 @@ Add to your Claude config (e.g. `%APPDATA%\Claude\claude_desktop_config.json` on
 ```json
 {
   "mcpServers": {
-    "ux-pilot": {
+    "ux-ui-pilot": {
       "command": "node",
-      "args": ["C:/path/to/ux-pilot/dist/mcp/server.js"],
+      "args": ["C:/path/to/ux-ui-pilot/dist/mcp/server.js"],
       "env": {
         "ANTHROPIC_API_KEY": "<your-api-key>"
       }
@@ -76,18 +76,18 @@ Add to your Claude config (e.g. `%APPDATA%\Claude\claude_desktop_config.json` on
 }
 ```
 
-**Requirements:** `ANTHROPIC_API_KEY` must be set. Run `npm run build` in the ux-pilot directory first.
+**Requirements:** `ANTHROPIC_API_KEY` must be set. Run `npm run build` in the ux-ui-pilot directory first.
 
 ---
 
 ## Quick Start — CLI
 
 ```bash
-# Install globally (from ux-pilot directory)
+# Install globally (from ux-ui-pilot directory)
 npm install -g .
 
 # Or run via npx
-npx ux-pilot --help
+npx ux-ui-pilot --help
 ```
 
 Set `ANTHROPIC_API_KEY` or pass `--api-key <key>`.
@@ -98,25 +98,25 @@ Set `ANTHROPIC_API_KEY` or pass `--api-key <key>`.
 
 ```bash
 # Design system with brand colors and typography
-ux-pilot design-system --colors "#1a73e8" "#ff5722" --typography "Inter" --platform web
+ux-ui-pilot design-system --colors "#1a73e8" "#ff5722" --typography "Inter" --platform web
 
 # Component architecture for a feature
-ux-pilot component-arch --description "User profile settings page with avatar, bio, and preferences" --framework React
+ux-ui-pilot component-arch --description "User profile settings page with avatar, bio, and preferences" --framework React
 
 # Accessibility audit (code, HTML, or description)
-ux-pilot a11y-audit --code ./components/Button.tsx --standard WCAG2.2-AA
-ux-pilot a11y-audit --html ./page.html
-ux-pilot a11y-audit --description "Login form with email and password fields"
+ux-ui-pilot a11y-audit --code ./components/Button.tsx --standard WCAG2.2-AA
+ux-ui-pilot a11y-audit --html ./page.html
+ux-ui-pilot a11y-audit --description "Login form with email and password fields"
 
 # User flow with Mermaid output
-ux-pilot user-flow --feature "User signs up and verifies email" --user-type "New visitor" --output flow.mmd
+ux-ui-pilot user-flow --feature "User signs up and verifies email" --user-type "New visitor" --output flow.mmd
 
 # Wireframe recommendations
-ux-pilot wireframe --feature "Dashboard with charts and activity feed" --platform desktop
+ux-ui-pilot wireframe --feature "Dashboard with charts and activity feed" --platform desktop
 
 # Design critique
-ux-pilot design-critique --description "Checkout flow with 3 steps and progress indicator"
-ux-pilot design-critique --code ./CheckoutForm.tsx
+ux-ui-pilot design-critique --description "Checkout flow with 3 steps and progress indicator"
+ux-ui-pilot design-critique --code ./CheckoutForm.tsx
 ```
 
 Use `--json` for raw JSON output instead of formatted Markdown.
@@ -171,10 +171,10 @@ Use `--json` for raw JSON output instead of formatted Markdown.
 ## Project Structure
 
 ```
-ux-pilot/
+ux-ui-pilot/
 ├── src/
 │   ├── core/
-│   │   ├── ux-pilot.ts      # Orchestrator
+│   │   ├── ux-ui-pilot.ts      # Orchestrator
 │   │   ├── llm-client.ts   # Claude wrapper
 │   │   └── types.ts        # Shared types, Capability interface
 │   ├── capabilities/
@@ -192,7 +192,7 @@ ux-pilot/
 │   ├── mcp/
 │   │   └── server.ts       # MCP server
 │   └── cli/
-│       └── ux-pilot.ts    # CLI entry
+│       └── ux-ui-pilot.ts    # CLI entry
 ├── dist/                   # Build output
 ├── package.json
 ├── tsconfig.json

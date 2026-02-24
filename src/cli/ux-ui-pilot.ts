@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @file ux-pilot.ts
+ * @file ux-ui-pilot.ts
  * @description CLI interface for UX Pilot — design systems, accessibility, user flows, wireframes, and design critique
  * @author Charley Scholz, ELEV8
  * @coauthor Claude 4.6 Opus, Claude Code (coding assistant), Cursor (IDE)
@@ -14,7 +14,7 @@ import ora from 'ora';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createRequire } from 'node:module';
-import { UXPilot } from '../core/ux-pilot.js';
+import { UXPilot } from '../core/ux-ui-pilot.js';
 
 const localRequire = createRequire(import.meta.url);
 const pkg: { version: string } = localRequire('../../package.json');
@@ -129,7 +129,7 @@ function printResult(result: unknown): void {
 // ---------------------------------------------------------------------------
 
 program
-  .name('ux-pilot')
+  .name('ux-ui-pilot')
   .description(
     'UX/UI Design Agent — design systems, accessibility, user flows, wireframes, and design critique',
   )

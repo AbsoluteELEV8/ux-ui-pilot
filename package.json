@@ -1,5 +1,5 @@
 {
-  "name": "ux-pilot",
+  "name": "ux-ui-pilot",
   "version": "0.1.0",
   "private": true,
   "description": "Specialized UX/UI design agent — design systems, accessibility audits, user flows, wireframes, and design critique",
@@ -10,16 +10,16 @@
     "Cursor (IDE)"
   ],
   "type": "module",
-  "main": "dist/core/ux-pilot.js",
+  "main": "dist/core/ux-ui-pilot.js",
   "bin": {
-    "ux-pilot": "dist/cli/ux-pilot.js"
+    "ux-ui-pilot": "dist/cli/ux-ui-pilot.js"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "start": "node dist/core/ux-pilot.js",
+    "start": "node dist/core/ux-ui-pilot.js",
     "mcp": "node dist/mcp/server.js",
-    "cli": "node dist/cli/ux-pilot.js",
+    "cli": "node dist/cli/ux-ui-pilot.js",
     "lint": "eslint src/",
     "type-check": "tsc --noEmit"
   },

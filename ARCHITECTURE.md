@@ -23,7 +23,7 @@ The system exposes two interfaces:
 
 ### UXPilot (Orchestrator)
 
-**Location:** `src/core/ux-pilot.ts`
+**Location:** `src/core/ux-ui-pilot.ts`
 
 The main entry point for all capability execution. Responsibilities:
 
@@ -113,7 +113,7 @@ Capabilities **import** these modules and **inject** relevant slices into prompt
 
 ## CLI Architecture
 
-**Location:** `src/cli/ux-pilot.ts`
+**Location:** `src/cli/ux-ui-pilot.ts`
 
 - **Framework:** Commander with subcommands
 - **Global options:** `--api-key`, `--model`, `--json`
@@ -167,7 +167,7 @@ MCP: Return text content  |  CLI: Print to stdout
    - Constructor: `(llm: LLMClient)`
    - `execute(input)`: validate, build prompt, call LLM, return output
 
-3. **Register in UXPilot** (`src/core/ux-pilot.ts`):
+3. **Register in UXPilot** (`src/core/ux-ui-pilot.ts`):
    - Add to `CAPABILITY_MODULES`
    - Add to `CAPABILITY_EXPORTS`
    - Add to `CAPABILITY_KEYWORDS` (for `analyzeRequest`)
@@ -177,7 +177,7 @@ MCP: Return text content  |  CLI: Print to stdout
    - Add `transformInput` case
    - Ensure `TOOL_CAPABILITY_MAP` includes the new tool
 
-5. **Add CLI subcommand** (`src/cli/ux-pilot.ts`):
+5. **Add CLI subcommand** (`src/cli/ux-ui-pilot.ts`):
    - Add `program.command(...)` with options
    - Map options to capability input
    - Call `runCapability` and `printResult`

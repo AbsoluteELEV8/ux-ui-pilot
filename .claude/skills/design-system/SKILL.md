@@ -137,7 +137,7 @@ List recommended components and which tokens they reference:
 ```json
 {
   "meta": {
-    "generatedBy": "ux-pilot/design-system",
+    "generatedBy": "ux-ui-pilot/design-system",
     "version": "1.0.0",
     "platform": "web",
     "mode": "light",
