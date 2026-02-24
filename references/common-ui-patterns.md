@@ -537,6 +537,6 @@ A grid of widget cards that reflows based on viewport size, with optional user c
 
 ---
 
-Author: Charley Scholz, JLAI
-Co-authored: Claude Opus 4.5, Claude Code (coding assistant), Cursor (IDE)
+Author: Charley Scholz, ELEV8
+Co-authored: Claude 4.6 Opus, Claude Code (coding assistant), Cursor (IDE)
 Last Updated: 2026-02-23
